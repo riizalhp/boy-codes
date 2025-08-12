@@ -1,7 +1,8 @@
 
 import React, { useState, useRef } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import { Menu, X, MapPin, Mail, Phone, ChevronDown } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Menu, X, MapPin, Mail, Phone, ChevronDown, Globe } from 'lucide-react';
 import { NAV_LINKS } from '../constants';
 import { WebService } from '../types';
 
@@ -9,10 +10,52 @@ interface HeaderProps {
   services: WebService[];
 }
 
+const LanguageSwitcher: React.FC = () => {
+  const { i18n } = useTranslation();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+    setIsOpen(false);
+  };
+
+  const currentLanguage = i18n.language.startsWith('en') ? 'EN' : 'ID';
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex items-center gap-2 transition-colors hover:text-brand-green"
+      >
+        <Globe size={16} className="text-brand-green" />
+        <span className="font-medium">{currentLanguage}</span>
+        <ChevronDown size={16} className={`transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+      {isOpen && (
+        <div className="absolute top-full right-0 mt-2 w-32 bg-brand-dark border border-brand-white/10 rounded-md shadow-lg z-10">
+          <button
+            onClick={() => changeLanguage('id')}
+            className="w-full text-left px-4 py-2 text-sm text-brand-white hover:bg-brand-gray"
+          >
+            Bahasa Indonesia
+          </button>
+          <button
+            onClick={() => changeLanguage('en')}
+            className="w-full text-left px-4 py-2 text-sm text-brand-white hover:bg-brand-gray"
+          >
+            English
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const Header: React.FC<HeaderProps> = ({ services }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isProductOpen, setIsProductOpen] = useState(false);
   const productTimeoutRef = useRef<number | null>(null);
+  const { t } = useTranslation();
 
   const handleProductEnter = () => {
     if (productTimeoutRef.current) {
@@ -50,6 +93,7 @@ const Header: React.FC<HeaderProps> = ({ services }) => {
               <Phone size={16} className="text-brand-green" />
               <span className="hidden md:inline">+62 812-3456-7890</span>
             </a>
+            <LanguageSwitcher />
           </div>
         </div>
       </div>
@@ -71,7 +115,7 @@ const Header: React.FC<HeaderProps> = ({ services }) => {
                       onMouseLeave={handleProductLeave}
                     >
                       <button className="font-heading text-base text-brand-white/80 hover:text-brand-green transition-colors duration-300 flex items-center gap-1">
-                        {link.label}
+                        {t(link.label)}
                         <ChevronDown size={16} className={`transition-transform duration-200 ${isProductOpen ? 'rotate-180' : ''}`} />
                       </button>
                     </div>
@@ -84,14 +128,14 @@ const Header: React.FC<HeaderProps> = ({ services }) => {
                     className="font-heading text-base text-brand-white/80 hover:text-brand-green transition-colors duration-300"
                     style={({ isActive }) => (isActive ? activeLinkStyle : {})}
                   >
-                    {link.label}
+                    {t(link.label)}
                   </NavLink>
                 );
               })}
             </nav>
             <div className="hidden md:block">
               <Link to="/kontak" className="bg-brand-green text-brand-dark font-bold font-heading py-2 px-6 rounded-md hover:bg-opacity-80 transition-all duration-300 button-glow">
-                Mulai Project
+                {t('Mulai Project')}
               </Link>
             </div>
             <div className="md:hidden">
@@ -126,10 +170,10 @@ const Header: React.FC<HeaderProps> = ({ services }) => {
                           {serviceIcon}
                           <div>
                             <p className="font-bold font-heading text-sm text-brand-white group-hover:text-brand-green transition-colors">
-                                {service.title}
+                                {t(service.title)}
                             </p>
                             <p className="text-xs text-brand-white/70 mt-1">
-                                {service.description}
+                                {t(service.description)}
                             </p>
                           </div>
                         </Link>
@@ -150,11 +194,11 @@ const Header: React.FC<HeaderProps> = ({ services }) => {
                 className="font-heading text-xl text-brand-white/80 hover:text-brand-green transition-colors duration-300"
                 style={({ isActive }) => (isActive ? activeLinkStyle : {})}
               >
-                {link.label}
+                {t(link.label)}
               </NavLink>
             ))}
              <Link to="/kontak" onClick={() => setIsOpen(false)} className="bg-brand-green text-brand-dark font-bold font-heading py-3 px-8 rounded-md hover:bg-opacity-80 transition-all duration-300 button-glow mt-4">
-                Mulai Project
+                {t('Mulai Project')}
               </Link>
           </nav>
         </div>
