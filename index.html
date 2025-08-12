@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BoyCodes - Partner Digital Kamu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none; /* IE and Edge */
+          scrollbar-width: none; /* Firefox */
+        }
+        .scroll-reveal {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+          transition-delay: 0.2s;
+        }
+        .scroll-reveal.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .text-glow {
+          text-shadow: 0 0 8px #39FF14, 0 0 10px rgba(57,255,20,0.7);
+        }
+        .button-glow {
+          animation: button-glow-subtle 3s ease-in-out infinite;
+        }
+        @keyframes button-glow-subtle {
+          0%, 100% { 
+            box-shadow: 0 0 4px rgba(57, 255, 20, 0.3), 0 0 7px rgba(57, 255, 20, 0.2), inset 0 0 2px rgba(57, 255, 20, 0.2);
+          }
+          50% { 
+            box-shadow: 0 0 8px rgba(57, 255, 20, 0.6), 0 0 14px rgba(57, 255, 20, 0.4), inset 0 0 5px rgba(57, 255, 20, 0.4);
+          }
+        }
+        .marquee-container {
+            -webkit-mask-image: linear-gradient(to right,
+                hsl(0 0% 0% / 0),
+                hsl(0 0% 0% / 1) 10%,
+                hsl(0 0% 0% / 1) 90%,
+                hsl(0 0% 0% / 0)
+            );
+            mask-image: linear-gradient(to right,
+                hsl(0 0% 0% / 0),
+                hsl(0 0% 0% / 1) 10%,
+                hsl(0 0% 0% / 1) 90%,
+                hsl(0 0% 0% / 0)
+            );
+        }
+        @keyframes marquee-scroll {
+            from { transform: translateX(0); }
+            to { transform: translateX(-100%); }
+        }
+        .animate-marquee {
+            animation: marquee-scroll 40s linear infinite;
+        }
+        @keyframes marquee-scroll-reverse {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+        .animate-marquee-reverse {
+            animation: marquee-scroll-reverse 80s linear infinite;
+        }
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+        .animate-blink {
+          animation: blink 1s step-end infinite;
+        }
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'brand-dark': '#0E0E0E',
+              'brand-gray': '#1C1C1C',
+              'brand-green': '#39FF14',
+              'brand-white': '#FFFFFF',
+            },
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              heading: ['Poppins', 'sans-serif'],
+            },
+          }
+        }
+      }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.8.0",
+    "react/": "https://esm.sh/react@^19.1.1/",
+    "react": "https://esm.sh/react@^19.1.1",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.1/",
+    "lucide-react": "https://esm.sh/lucide-react@^0.539.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-brand-dark text-brand-white font-sans">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
